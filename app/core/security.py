@@ -6,7 +6,7 @@ from pwdlib import PasswordHash
 
 password_hash = PasswordHash.recommended()
 
-jwt_secret = os.getenv("JWT_SECRET")
+jwt_secret = os.getenv("JWT_SECRET", "dev-only-insecure-secret-change-me-please-1234")
 jwt_algorithm = "HS256"
 
 
