@@ -40,11 +40,10 @@ def test_create_user_missing_required_field_is_validation_error(
     response = client.post(
         "/user/",
         json={
-            "username": "incompleteuser",
-            "first_name": "Incomplete",
+            "username": "wronguser",
+            "first_name": "Wrong",
             "last_name": "User",
-            "email": "incomplete@example.com",
-            # password missing
+            "email": "wronguser@example.com",
             "role": "cashier",
         },
         headers=auth_headers,

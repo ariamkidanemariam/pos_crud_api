@@ -73,8 +73,7 @@ def test_create_sale_item_missing_required_field_is_validation_error(
             "product_id": product["product_id"],
             "quantity": 2,
             "unit_price": "1.50",
-            # total_price missing
-        },
+            },
         headers=auth_headers,
     )
 

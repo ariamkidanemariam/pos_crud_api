@@ -7,8 +7,8 @@ def test_create_supplier_success(client, auth_headers):
     response = client.post(
         "/supplier/",
         json={
-            "company_name": "ABC Distributors",
-            "contact_name": "John Supplier",
+            "company_name": "ABC Suppliers",
+            "contact_name": "John Doe",
             "email": "supplier@example.com",
             "supplier_phone": "0712345678",
             "address": "Nairobi",
@@ -21,8 +21,8 @@ def test_create_supplier_success(client, auth_headers):
 
     body = response.json()
 
-    assert body["company_name"] == "ABC Distributors"
-    assert body["contact_name"] == "John Supplier"
+    assert body["company_name"] == "ABC Suppliers"
+    assert body["contact_name"] == "John Doe"
     assert body["email"] == "supplier@example.com"
     assert body["supplier_phone"] == "0712345678"
     assert body["address"] == "Nairobi"
@@ -35,7 +35,7 @@ def test_create_supplier_missing_company_name_is_validation_error(
     response = client.post(
         "/supplier/",
         json={
-            "contact_name": "John Supplier",
+            "contact_name": "John Doe",
             "email": "missing-company@example.com",
             "supplier_phone": "0712345679",
         },
@@ -49,27 +49,17 @@ def test_create_supplier_missing_contact_name_is_allowed_by_schema(
     client,
     auth_headers,
 ):
-    """
-    The Pydantic schema makes contact_name optional.
-    This test documents the current API behaviour.
-
-    NOTE: The database model currently makes contact_name NOT NULL,
-    so if the API returns 500 here, the model/schema mismatch needs
-    to be fixed.
-    """
 
     response = client.post(
         "/supplier/",
         json={
-            "company_name": "Schema Test Supplier",
+            "company_name": "Test Supplier",
             "email": "schema@example.com",
             "supplier_phone": "0712345680",
         },
         headers=auth_headers,
     )
 
-    # The schema allows this field to be omitted.
-    # The current database model may prevent it.
     assert response.status_code in (201, 400, 500)
 
 
