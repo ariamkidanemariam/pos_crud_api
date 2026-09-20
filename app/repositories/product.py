@@ -1,14 +1,13 @@
 from app.models.product import Product
 from sqlalchemy.orm import Session
-
 class ProductRepository:
-    def __int__(self):
+    def __init__(self):          
         self.model=Product
     def get(self, db: Session, id:int):
         return db.get (Product, id)
     def get_all(self, db:Session):
         return db.query(Product).all()
-    def create(self, db: Session, id:int):
+    def create(self, db: Session, data:dict):   
         product=Product(**data)
         db.add(product)
         db.commit()
@@ -23,8 +22,7 @@ class ProductRepository:
     def delete (self, db: Session, db_obj:Product):
         db.delete(db_obj)
         db.commit()
-        
-    
+
 product_repository=ProductRepository()
         
         

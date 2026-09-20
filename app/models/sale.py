@@ -4,7 +4,8 @@ from sqlalchemy import(
     ForeignKey,
     DateTime,
     DECIMAL, 
-    Enum
+    Enum,
+    UUID
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -22,9 +23,11 @@ class SalesStatus(str, enum.Enum):
 class Sale(Base):
     __tablename__="sales"
     
-    sale_id=Column(String(50), primary_key=True, default=lambda:str(uuid.uuid4()), autoincrement=False)
-    customer_id=Column(String(50), ForeignKey("customers.customer_id"), nullable=True)
-    user_id= Column(String(50), ForeignKey("users.user_id"), nullable=True)
+    
+    sale_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, autoincrement=False)
+    customer_id=Column(UUID(as_uuid=True), ForeignKey("customers.customer_id"), nullable=True)
+    user_id= Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=True)
+    
     sale_date=Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     subtotal=Column(DECIMAL(10,2), nullable=False)
     tax_amount=Column(DECIMAL(10,2), nullable=False)
@@ -33,7 +36,8 @@ class Sale(Base):
     status=Column(Enum(SalesStatus, name="sale_satus_enum"), nullable=False)
     
     
-    user=relationship("User", back_populates="users")
-    customer=relationship("Customer", back_populates="customers")
-    receipt = relationship("Receipt", back_populates="sale", uselist=False)   
+    user = relationship("User", back_populates="sales")
+    customer=relationship("Customer", back_populates="sale")
+    receipt = relationship("Receipt", back_populates="sale", uselist=False)
+    sale_items = relationship("SaleItem", back_populates="sale")
     

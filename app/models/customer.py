@@ -4,9 +4,10 @@ from sqlalchemy import(
     Column,
     String,
     Boolean,
-    DateTime 
+    DateTime,
+    UUID 
 )
-
+from sqlalchemy.orm import relationship
 from database import Base
 import uuid
 
@@ -14,8 +15,7 @@ class Customer(Base):
     
     __tablename__="customers"
     
-
-    customer_id = Column(String(50), primary_key=True, default= lambda: str (uuid.uuid4()), autoincrement=False)
+    customer_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, autoincrement=False)
     first_name=Column(String(100), nullable=False)
     last_name=Column(String(100), nullable=False)
     phone_no=Column(String(20), nullable= True)
@@ -24,4 +24,5 @@ class Customer(Base):
     created_at=Column(DateTime(timezone=True), server_default=func.now())
     updated_at=Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     
-     
+    sale=relationship("Sale", back_populates="customer")
+        

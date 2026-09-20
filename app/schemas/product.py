@@ -1,31 +1,31 @@
 from datetime import datetime
 from decimal import Decimal
-
-
+from typing import Optional
+from uuid import UUID
 from pydantic import BaseModel, ConfigDict
 
 class ProductBase (BaseModel):
     name:str
     price:Decimal
     quantity:int
-    category_id: int | None=None
-    supplier_id: int | None=None
-    barcode: str | None=None
-    is_active: bool | None=None
+    category_id: Optional[UUID] =None
+    supplier_id: Optional[UUID] =None
+    barcode: Optional[str]= None
+    is_active: Optional [bool]=None
     
 class ProductCreate (ProductBase):
     pass
 
 class ProductUpdate(BaseModel):
-    name:str | None=None
-    price:Decimal |None=None
-    quantity:int | None=None
-    category_id: int | None=None
-    supplier_id: int | None=None
-    barcode: str | None=None
+    name:Optional[str]= None
+    price: Optional[Decimal] =None
+    quantity:Optional[int] =None
+    category_id: Optional[UUID] =None
+    supplier_id: Optional[UUID] =None
+    barcode: Optional[str]= None
     
 class   ProductRead(ProductBase):
     model_config=ConfigDict(from_attributes=True)
     
-    product_id:str
+    product_id:UUID
     created_at:datetime

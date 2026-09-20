@@ -5,7 +5,8 @@ from sqlalchemy import (
     ForeignKey, 
     Integer,
     DECIMAL, 
-    String
+    String,
+    UUID
 )
 
 from sqlalchemy.orm import relationship
@@ -16,16 +17,16 @@ from database import Base
 class Product(Base):
     __tablename__= "products"
     
-    product_id= Column(String(50), default=lambda:str( uuid.uuid4()), primary_key=True, autoincrement=False)
+    product_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, autoincrement=False)
     name=Column(String, nullable=False)
     price=Column(DECIMAL(10,2), nullable=False)
     quantity= Column(Integer,nullable=False)
-    category_id = Column(String(50), ForeignKey("categories.category_id"), nullable=True)
-    supplier_id = Column(String(50), ForeignKey("suppliers.supplier_id"), nullable=True)
+    category_id = Column(UUID(as_uuid= True), ForeignKey("categories.category_id"), nullable=True)
+    supplier_id = Column(UUID(as_uuid= True), ForeignKey("suppliers.supplier_id"), nullable=True)
     barcode= Column(String, nullable=True)
     is_active=Column(Boolean, nullable=False, default=True)
     created_at=Column(DateTime(timezone=True), server_default=func.now())
     
     category=relationship("Category", back_populates="products")
     supplier=relationship("Supplier", back_populates="products")
-    
+    sale_items = relationship("SaleItem", back_populates="product")

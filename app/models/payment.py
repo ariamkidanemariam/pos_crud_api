@@ -4,7 +4,8 @@ from sqlalchemy import(
     DECIMAL,
     DateTime,
     Column, 
-    ForeignKey
+    ForeignKey,
+    UUID
 )
 import enum
 import uuid
@@ -27,11 +28,11 @@ class Payment(Base):
     __tablename__="payments"
     
     
-    payment_id=Column(String(50), primary_key=True, default=lambda: str(uuid.uuid4()), autoincrement=False)
-    sale_id= Column(String(50), ForeignKey("sales.sale_id"), nullable=False)
+    payment_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, autoincrement=False)
+    sale_id= Column(UUID(as_uuid=True), ForeignKey("sales.sale_id"), nullable=False)
     payment_method = Column(Enum(PaymentMethod, name="payment_method_enum"), nullable=True)
     amount= Column(DECIMAL(10,2), nullable= False)
     payment_date=Column(DateTime(timezone=True), server_default=func.now())
     status=Column(Enum(PaymentStatus, name="status_enum"), nullable=False)
 
-    sale=relationship("Sale", "sales.sale_id", back_populates="payments")
+    
