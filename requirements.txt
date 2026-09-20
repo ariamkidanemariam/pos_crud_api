@@ -5,3 +5,8 @@ PyJWT==2.14.0
 pytest==9.1.1
 python-dotenv==1.2.3
 SQLAlchemy==2.0.54
+httpx2==2.13.0
+python-multipart==0.0.20
+psycopg2-binary==2.9.12
+uvicorn==0.52.4
+argon2-cffi==25.1.0
