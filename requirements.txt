@@ -1,7 +1,6 @@
 fastapi==0.141.1
 pwdlib==0.3.1
 pydantic==2.13.5
-PyJWT==2.3.0
 PyJWT==2.14.0
 pytest==9.1.1
 python-dotenv==1.2.3
