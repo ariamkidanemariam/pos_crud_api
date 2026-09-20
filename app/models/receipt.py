@@ -27,8 +27,7 @@ class Receipt(Base):
     receipt_number=Column(String(50), nullable=False, unique=True)
     generated_at=Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     receipt_data= Column(Text, nullable=False)
-    type=Column(Enum(ReceiptType, name="receipt_type_enum"), nullable=False)
-    
+    receipt_type = Column(Enum(ReceiptType, name="receipt_type_enum"),nullable=False)
     
     sale = relationship("Sale", back_populates="receipt")   
     

@@ -10,6 +10,7 @@ class PaymentBase(BaseModel):
     sale_id: UUID
     payment_method : PaymentMethod
     amount: Decimal
+    payment_date: datetime  
     payment_date: datetime
     status: PaymentStatus
     

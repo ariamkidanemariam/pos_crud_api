@@ -9,6 +9,7 @@ import app.models
 Base.metadata.create_all(bind=engine)
 
 from app.routers import ( 
+    auth,                  
     category,
     customer,
     payment,
@@ -31,6 +32,7 @@ app.include_router(sale_item.router)
 app.include_router(sale.router)
 app.include_router(supplier.router)
 app.include_router(user.router)
+app.include_router(auth.router)
 
 @app.get("/")
 def root():

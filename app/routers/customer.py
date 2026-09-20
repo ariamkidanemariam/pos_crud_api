@@ -30,5 +30,5 @@ def update_customer(customer_id: UUID, data: CustomerUpdate, db: Session = Depen
 
 
 @router.delete("/{customer_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_customer(customer_id: str, db: Session = Depends(get_db)):
+def delete_customer(customer_id: UUID, db: Session = Depends(get_db)):
     return customer_service.delete_customer(db, customer_id)

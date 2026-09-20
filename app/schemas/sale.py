@@ -19,8 +19,8 @@ class SalesCreate(SalesBase):
     pass
 
 class SalesUpdate(BaseModel):
-        customer_id: str
-        user_id: str
+        customer_id: UUID
+        user_id: UUID
         sale_date: Optional [datetime] =None
         subtotal: Optional [Decimal]= None
         tax_amount: Optional [Decimal]= None
